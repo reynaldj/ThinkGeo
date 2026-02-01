@@ -1,0 +1,29 @@
+{
+  "source": "tool_choice_data_balanced_realistic_negatives",
+  "modifications": [
+    "Added argument_schema field with parameter names (keys only, no values masked as <MASKED>)",
+    "Transferred 6 CountGivenObject first-step instances from test to train"
+  ],
+  "countgivenobject_transfer_details": {
+    "transferred_count": 6,
+    "test_indices_transferred": [
+      41,
+      206,
+      273,
+      281,
+      339,
+      396
+    ],
+    "train_before": 6,
+    "train_after": 12,
+    "test_before": 18,
+    "test_after": 12
+  },
+  "schema_format": "Parameter names only with <MASKED> as value indicator",
+  "total_samples": 3842,
+  "split": {
+    "train": 1172,
+    "val": 542,
+    "test": 2128
+  }
+}

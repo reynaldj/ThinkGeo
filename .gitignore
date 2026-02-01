@@ -1,0 +1,7 @@
+agentlego/
+opencompass/
+checkpoints*/
+*.pt
+*.pth
+*.bin
+models/

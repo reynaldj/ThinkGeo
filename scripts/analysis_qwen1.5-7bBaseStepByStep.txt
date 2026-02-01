@@ -1,0 +1,267 @@
+=== ThinkGeo_bench_0.json ===
+total_steps              : 216
+explicit_error           : 18
+missing_tool             : 159
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 1
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 9
+explicit_error_arg_mismatch: 3
+invalid_without_error    : 159
+invalid_without_error_rate: 0.7361
+
+=== ThinkGeo_bench_1.json ===
+total_steps              : 218
+explicit_error           : 34
+missing_tool             : 147
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 19
+explicit_error_arg_mismatch: 11
+invalid_without_error    : 147
+invalid_without_error_rate: 0.6743
+
+=== ThinkGeo_bench_2.json ===
+total_steps              : 313
+explicit_error           : 70
+missing_tool             : 206
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 2
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 38
+explicit_error_arg_mismatch: 13
+invalid_without_error    : 206
+invalid_without_error_rate: 0.6581
+
+=== ThinkGeo_bench_3.json ===
+total_steps              : 214
+explicit_error           : 36
+missing_tool             : 138
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 2
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 16
+explicit_error_arg_mismatch: 12
+invalid_without_error    : 138
+invalid_without_error_rate: 0.6449
+
+=== ThinkGeo_bench_4.json ===
+total_steps              : 202
+explicit_error           : 39
+missing_tool             : 120
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 1
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 16
+explicit_error_arg_mismatch: 19
+invalid_without_error    : 120
+invalid_without_error_rate: 0.5941
+
+=== ThinkGeo_bench_5.json ===
+total_steps              : 190
+explicit_error           : 23
+missing_tool             : 119
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 1
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 11
+explicit_error_arg_mismatch: 8
+invalid_without_error    : 119
+invalid_without_error_rate: 0.6263
+
+=== ThinkGeo_bench_6.json ===
+total_steps              : 200
+explicit_error           : 33
+missing_tool             : 127
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 3
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 18
+explicit_error_arg_mismatch: 8
+invalid_without_error    : 127
+invalid_without_error_rate: 0.6350
+
+=== ThinkGeo_bench_7.json ===
+total_steps              : 181
+explicit_error           : 33
+missing_tool             : 100
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 1
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 15
+explicit_error_arg_mismatch: 14
+invalid_without_error    : 100
+invalid_without_error_rate: 0.5525
+
+=== ThinkGeo_bench_8.json ===
+total_steps              : 187
+explicit_error           : 25
+missing_tool             : 120
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 2
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 9
+explicit_error_arg_mismatch: 13
+invalid_without_error    : 120
+invalid_without_error_rate: 0.6417
+
+================================================================================
+=== AGGREGATED ===
+================================================================================
+total_steps              : 1921
+explicit_error           : 311
+missing_tool             : 1236
+tool_mismatch            : 0
+arg_mismatch             : 0
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 13
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 151
+explicit_error_arg_mismatch: 101
+invalid_without_error    : 1236
+invalid_without_error_rate: 0.6434
+
+================================================================================
+=== TOOL MISMATCH BREAKDOWN ===
+================================================================================
+No tool mismatches found.
+
+================================================================================
+=== MISSING TOOL BREAKDOWN (by expected tool) ===
+================================================================================
+Expected Tool                            Count     
+--------------------------------------------------------------------------------
+Calculator                               334       
+TextToBbox                               260       
+RegionAttributeDescription               235       
+CountGivenObject                         116       
+ChangeDetection                          76        
+Solver                                   72        
+DrawBox                                  45        
+SegmentObjectPixels                      30        
+Plot                                     17        
+GoogleSearch                             17        
+ImageDescription                         16        
+OCR                                      9         
+ObjectDetection                          5         
+AddText                                  4         
+
+================================================================================
+=== TOOL CORRECT BREAKDOWN (correct tool + correct args + no error) ===
+================================================================================
+Total correct tool calls: 0
+No correct tool calls found.
+
+================================================================================
+=== EXPLICIT ERROR TOOL BREAKDOWN (gold expects tool, pred has error) ===
+================================================================================
+Missing tool (with error): 0
+Tool mismatch (with error): 151
+Arg mismatch (with error): 101
+Expected Tool                  Predicted Tool                 Count     
+--------------------------------------------------------------------------------
+TextToBbox                     Calculator                     22        
+ChangeDetection                Calculator                     16        
+TextToBbox                     DrawBox                        14        
+RegionAttributeDescription     NoAction                       13        
+CountGivenObject               Plot                           12        
+RegionAttributeDescription     DrawBox                        10        
+Solver                         Calculator                     8         
+TextToBbox                     CountGivenObject               7         
+Calculator                     Plot                           6         
+Calculator                     DrawBox                        6         
+TextToBbox                     Plot                           5         
+CountGivenObject               Calculator                     3         
+RegionAttributeDescription     Calculator                     3         
+SegmentObjectPixels            Calculator                     3         
+RegionAttributeDescription     Plot                           2         
+RegionAttributeDescription     CountGivenObject               2         
+TextToBbox                     RegionAttributeDescription     2         
+TextToBbox                     NoAction                       2         
+CountGivenObject               NoAction                       1         
+GoogleSearch                   CountGivenObject               1         
+ImageDescription               Plot                           1         
+RegionAttributeDescription     TextToBbox                     1         
+GoogleSearch                   TextToBbox                     1         
+Calculator                     AddText                        1         
+Solver                         DrawBox                        1         
+RegionAttributeDescription     Solver                         1         
+Solver                         CountGivenObject               1         
+Calculator                     RegionAttributeDescription     1         
+Solver                         Plot                           1         
+Calculator                     CountGivenObject               1         
+Calculator                     NoAction                       1         
+SegmentObjectPixels            Solver                         1         
+TextToBbox                     Solver                         1         
+
+Arg mismatch (with error) details:
+  Calculator:
+    invalid_arguments_type         26
+    expression_mismatch            8
+    expression_not_math            4
+  ChangeDetection:
+    invalid_arguments_type         6
+  CountGivenObject:
+    invalid_arguments_type         8
+  DrawBox:
+    invalid_arguments_type         14
+  OCR:
+    invalid_arguments_type         1
+  Plot:
+    invalid_arguments_type         2
+    text_mismatch                  1
+    command_mismatch               1
+  RegionAttributeDescription:
+    invalid_arguments_type         15
+  Solver:
+    invalid_arguments_type         5
+  TextToBbox:
+    invalid_arguments_type         4
+    text_mismatch                  1
+
+================================================================================
+=== TOOL IN ANSWER STEP BREAKDOWN (pred calls tool, gold expects answer) ===
+================================================================================
+Without error: 0
+With error: 13
+Total: 13
+
+Predicted Tool                           Without Error   With Error      Total     
+--------------------------------------------------------------------------------
+Calculator                               0               6               6         
+NoAction                                 0               6               6         
+Solver                                   0               1               1         
+
+================================================================================
+=== ARGUMENT MISMATCH BREAKDOWN (by tool and error type) ===
+================================================================================
+No argument mismatches found.
