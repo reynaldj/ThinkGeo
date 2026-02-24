@@ -130,11 +130,11 @@ def format_input_text(
     """
     Format the input text for the classifier.
     
-    Format:
-      [CONTEXT] user_question
-      [HISTORY] prior_tool_calls
-      [TOOL_CALLED] tool_name: description
-      [SCHEMA] param1=<TYPE>, param2=<TYPE>  # NEW: Schema with masked values
+        Format:
+            [CONTEXT] user_question
+            [HISTORY] prior_tool_calls
+            [TOOL_CALLED] tool_name: description
+            [ARGS] param1, param2  # parameter names only (values masked)
     
     Args:
         context: The user's question/request
@@ -158,10 +158,11 @@ def format_input_text(
 
     parts.append(f"[TOOL_CALLED] {tool_name}: {tool_description}")
     
-    # NEW: Include argument schema with masked values
+    # Include argument names only to match training format
     if argument_schema and isinstance(argument_schema, dict):
-        schema_str = ", ".join([f"{k}={v}" for k, v in argument_schema.items()])
-        parts.append(f"[SCHEMA] {schema_str}")
+        args_str = ", ".join(argument_schema.keys())
+        if args_str:
+            parts.append(f"[ARGS] {args_str}")
     
     return " ".join(parts)
 

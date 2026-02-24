@@ -1,0 +1,749 @@
+=== ThinkGeo_bench_0.json ===
+total_steps              : 75
+explicit_error           : 13
+classifier_rejection     : 10
+missing_tool             : 26
+tool_mismatch            : 9
+arg_mismatch             : 9
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 13
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 44
+invalid_without_error_rate: 0.5867
+
+=== ThinkGeo_bench_10.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_11.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_12.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_13.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_14.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_15.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_16.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_17.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_18.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_19.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_1.json ===
+total_steps              : 78
+explicit_error           : 5
+classifier_rejection     : 4
+missing_tool             : 30
+tool_mismatch            : 16
+arg_mismatch             : 13
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 1
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 5
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 59
+invalid_without_error_rate: 0.7564
+
+=== ThinkGeo_bench_20.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_21.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_22.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_23.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_24.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_25.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_26.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_27.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_2.json ===
+total_steps              : 101
+explicit_error           : 4
+classifier_rejection     : 4
+missing_tool             : 26
+tool_mismatch            : 23
+arg_mismatch             : 21
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 14
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 4
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 70
+invalid_without_error_rate: 0.6931
+
+=== ThinkGeo_bench_3.json ===
+total_steps              : 79
+explicit_error           : 9
+classifier_rejection     : 7
+missing_tool             : 30
+tool_mismatch            : 11
+arg_mismatch             : 7
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 6
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 9
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 48
+invalid_without_error_rate: 0.6076
+
+=== ThinkGeo_bench_4.json ===
+total_steps              : 66
+explicit_error           : 5
+classifier_rejection     : 3
+missing_tool             : 21
+tool_mismatch            : 7
+arg_mismatch             : 12
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 6
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 5
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 40
+invalid_without_error_rate: 0.6061
+
+=== ThinkGeo_bench_5.json ===
+total_steps              : 71
+explicit_error           : 10
+classifier_rejection     : 9
+missing_tool             : 21
+tool_mismatch            : 9
+arg_mismatch             : 11
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 10
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 41
+invalid_without_error_rate: 0.5775
+
+=== ThinkGeo_bench_6.json ===
+total_steps              : 67
+explicit_error           : 7
+classifier_rejection     : 6
+missing_tool             : 24
+tool_mismatch            : 10
+arg_mismatch             : 7
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 3
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 7
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 41
+invalid_without_error_rate: 0.6119
+
+=== ThinkGeo_bench_7.json ===
+total_steps              : 57
+explicit_error           : 9
+classifier_rejection     : 7
+missing_tool             : 27
+tool_mismatch            : 2
+arg_mismatch             : 2
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 1
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 9
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 31
+invalid_without_error_rate: 0.5439
+
+=== ThinkGeo_bench_8.json ===
+total_steps              : 20
+explicit_error           : 0
+classifier_rejection     : 0
+missing_tool             : 9
+tool_mismatch            : 4
+arg_mismatch             : 3
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 0
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 16
+invalid_without_error_rate: 0.8000
+
+=== ThinkGeo_bench_9.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_0.json ===
+total_steps              : 75
+explicit_error           : 21
+classifier_rejection     : 20
+missing_tool             : 5
+tool_mismatch            : 5
+arg_mismatch             : 14
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 16
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 21
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 24
+invalid_without_error_rate: 0.3200
+
+=== ThinkGeo_bench_10.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_11.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_12.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_13.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_14.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_15.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_16.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_17.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_18.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_19.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_1.json ===
+total_steps              : 78
+explicit_error           : 17
+classifier_rejection     : 17
+missing_tool             : 6
+tool_mismatch            : 5
+arg_mismatch             : 29
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 8
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 17
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 40
+invalid_without_error_rate: 0.5128
+
+=== ThinkGeo_bench_20.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_21.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_22.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_23.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_24.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_25.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_26.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_27.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_2.json ===
+total_steps              : 101
+explicit_error           : 11
+classifier_rejection     : 11
+missing_tool             : 5
+tool_mismatch            : 12
+arg_mismatch             : 25
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 35
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 11
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 42
+invalid_without_error_rate: 0.4158
+
+=== ThinkGeo_bench_3.json ===
+total_steps              : 79
+explicit_error           : 9
+classifier_rejection     : 9
+missing_tool             : 3
+tool_mismatch            : 10
+arg_mismatch             : 25
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 16
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 9
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 38
+invalid_without_error_rate: 0.4810
+
+=== ThinkGeo_bench_4.json ===
+total_steps              : 66
+explicit_error           : 6
+classifier_rejection     : 6
+missing_tool             : 2
+tool_mismatch            : 4
+arg_mismatch             : 17
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 22
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 6
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 23
+invalid_without_error_rate: 0.3485
+
+=== ThinkGeo_bench_5.json ===
+total_steps              : 71
+explicit_error           : 6
+classifier_rejection     : 6
+missing_tool             : 3
+tool_mismatch            : 7
+arg_mismatch             : 24
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 15
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 6
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 34
+invalid_without_error_rate: 0.4789
+
+=== ThinkGeo_bench_6.json ===
+total_steps              : 67
+explicit_error           : 10
+classifier_rejection     : 10
+missing_tool             : 1
+tool_mismatch            : 10
+arg_mismatch             : 21
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 9
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 10
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 32
+invalid_without_error_rate: 0.4776
+
+=== ThinkGeo_bench_7.json ===
+total_steps              : 57
+explicit_error           : 13
+classifier_rejection     : 13
+missing_tool             : 2
+tool_mismatch            : 4
+arg_mismatch             : 19
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 3
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 13
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 25
+invalid_without_error_rate: 0.4386
+
+=== ThinkGeo_bench_8.json ===
+total_steps              : 20
+explicit_error           : 4
+classifier_rejection     : 4
+missing_tool             : 0
+tool_mismatch            : 1
+arg_mismatch             : 9
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 2
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 4
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 10
+invalid_without_error_rate: 0.5000
+
+=== ThinkGeo_bench_9.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_0.json ===
+total_steps              : 75
+explicit_error           : 1
+classifier_rejection     : 1
+missing_tool             : 38
+tool_mismatch            : 9
+arg_mismatch             : 9
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 1
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 56
+invalid_without_error_rate: 0.7467
+
+=== ThinkGeo_bench_10.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_11.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_12.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_13.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_14.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_15.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_16.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_17.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_18.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_19.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_1.json ===
+total_steps              : 78
+explicit_error           : 4
+classifier_rejection     : 3
+missing_tool             : 35
+tool_mismatch            : 7
+arg_mismatch             : 15
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 4
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 57
+invalid_without_error_rate: 0.7308
+
+=== ThinkGeo_bench_20.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_21.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_22.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_23.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_24.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_25.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_26.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_27.json ===
+total_steps              : 0
+
+=== ThinkGeo_bench_2.json ===
+total_steps              : 101
+explicit_error           : 3
+classifier_rejection     : 0
+missing_tool             : 52
+tool_mismatch            : 9
+arg_mismatch             : 14
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 10
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 3
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 75
+invalid_without_error_rate: 0.7426
+
+=== ThinkGeo_bench_3.json ===
+total_steps              : 79
+explicit_error           : 3
+classifier_rejection     : 3
+missing_tool             : 32
+tool_mismatch            : 9
+arg_mismatch             : 15
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 3
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 56
+invalid_without_error_rate: 0.7089
+
+=== ThinkGeo_bench_4.json ===
+total_steps              : 66
+explicit_error           : 4
+classifier_rejection     : 1
+missing_tool             : 30
+tool_mismatch            : 7
+arg_mismatch             : 8
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 2
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 4
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 45
+invalid_without_error_rate: 0.6818
+
+=== ThinkGeo_bench_5.json ===
+total_steps              : 71
+explicit_error           : 1
+classifier_rejection     : 1
+missing_tool             : 30
+tool_mismatch            : 8
+arg_mismatch             : 12
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 4
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 1
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 50
+invalid_without_error_rate: 0.7042
+
+=== ThinkGeo_bench_6.json ===
+total_steps              : 67
+explicit_error           : 2
+classifier_rejection     : 1
+missing_tool             : 29
+tool_mismatch            : 5
+arg_mismatch             : 13
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 2
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 2
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 47
+invalid_without_error_rate: 0.7015
+
+=== ThinkGeo_bench_7.json ===
+total_steps              : 57
+explicit_error           : 5
+classifier_rejection     : 5
+missing_tool             : 27
+tool_mismatch            : 1
+arg_mismatch             : 7
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 1
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 5
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 35
+invalid_without_error_rate: 0.6140
+
+=== ThinkGeo_bench_8.json ===
+total_steps              : 20
+explicit_error           : 0
+classifier_rejection     : 0
+missing_tool             : 14
+tool_mismatch            : 0
+arg_mismatch             : 2
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 0
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 0
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 16
+invalid_without_error_rate: 0.8000
+
+=== ThinkGeo_bench_9.json ===
+total_steps              : 0
+
+================================================================================
+=== AGGREGATED ===
+================================================================================
+total_steps              : 1842
+explicit_error           : 182
+classifier_rejection     : 161
+missing_tool             : 528
+tool_mismatch            : 204
+arg_mismatch             : 363
+tool_in_answer_step      : 0
+tool_in_answer_step_with_error: 0
+tool_correct             : 196
+explicit_error_missing_tool: 0
+explicit_error_tool_mismatch: 182
+explicit_error_arg_mismatch: 0
+invalid_without_error    : 1095
+invalid_without_error_rate: 0.5945
+
+================================================================================
+=== TOOL MISMATCH BREAKDOWN ===
+================================================================================
+Expected Tool                  Predicted Tool                 Count     
+--------------------------------------------------------------------------------
+Calculator                     DrawBox                        21        
+Calculator                     RegionAttributeDescription     17        
+RegionAttributeDescription     TextToBbox                     17        
+TextToBbox                     Calculator                     14        
+Calculator                     TextToBbox                     14        
+Calculator                     CountGivenObject               11        
+TextToBbox                     RegionAttributeDescription     9         
+RegionAttributeDescription     CountGivenObject               9         
+TextToBbox                     CountGivenObject               9         
+RegionAttributeDescription     DrawBox                        8         
+RegionAttributeDescription     Calculator                     7         
+TextToBbox                     DrawBox                        5         
+Solver                         Calculator                     5         
+Calculator                     ChangeDetection                5         
+GoogleSearch                   Calculator                     4         
+CountGivenObject               NoAction                       4         
+Solver                         DrawBox                        4         
+TextToBbox                     NoAction                       4         
+Calculator                     NoAction                       3         
+CountGivenObject               Calculator                     3         
+
+================================================================================
+=== MISSING TOOL BREAKDOWN (by expected tool) ===
+================================================================================
+Expected Tool                            Count     
+--------------------------------------------------------------------------------
+Calculator                               139       
+TextToBbox                               137       
+RegionAttributeDescription               80        
+CountGivenObject                         46        
+ChangeDetection                          35        
+Solver                                   29        
+DrawBox                                  19        
+Plot                                     12        
+SegmentObjectPixels                      8         
+GoogleSearch                             7         
+OCR                                      6         
+ImageDescription                         4         
+AddText                                  3         
+ObjectDetection                          3         
+
+================================================================================
+=== TOOL CORRECT BREAKDOWN (correct tool + correct args + no error) ===
+================================================================================
+Total correct tool calls: 196
+Tool                                     Count     
+--------------------------------------------------------------------------------
+RegionAttributeDescription               82        
+CountGivenObject                         40        
+TextToBbox                               30        
+Calculator                               23        
+DrawBox                                  11        
+OCR                                      3         
+ImageDescription                         2         
+ObjectDetection                          2         
+ChangeDetection                          2         
+SegmentObjectPixels                      1         
+
+================================================================================
+=== EXPLICIT ERROR TOOL BREAKDOWN (gold expects tool, pred has error) ===
+================================================================================
+Missing tool (with error): 0
+Tool mismatch (with error): 182
+Arg mismatch (with error): 0
+Expected Tool                  Predicted Tool                 Count     
+--------------------------------------------------------------------------------
+Calculator                     NoAction                       55        
+Solver                         NoAction                       35        
+TextToBbox                     NoAction                       31        
+RegionAttributeDescription     NoAction                       22        
+CountGivenObject               NoAction                       15        
+ChangeDetection                NoAction                       12        
+Plot                           NoAction                       5         
+GoogleSearch                   NoAction                       4         
+DrawBox                        NoAction                       1         
+OCR                            NoAction                       1         
+ObjectDetection                NoAction                       1         
+
+================================================================================
+=== TOOL IN ANSWER STEP BREAKDOWN (pred calls tool, gold expects answer) ===
+================================================================================
+Without error: 0
+With error: 0
+Total: 0
+
+No tool calls in answer steps found.
+
+================================================================================
+=== ARGUMENT MISMATCH BREAKDOWN (by tool and error type) ===
+================================================================================
+
+Calculator:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  expression_mismatch                      104       
+  expression_not_math                      1         
+
+CountGivenObject:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  image_mismatch                           2         
+
+DrawBox:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  bbox_mismatch                            16        
+
+GoogleSearch:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  query_mismatch                           6         
+  k_mismatch                               3         
+
+RegionAttributeDescription:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  image_mismatch                           1         
+
+TextToBbox:
+  Error Type                               Count     
+  ------------------------------------------------------------
+  text_mismatch                            59        
+  top1_mismatch                            31        

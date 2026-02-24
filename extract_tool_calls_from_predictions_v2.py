@@ -24,6 +24,59 @@ def normalize_tool_name(name: str) -> str:
     return name.strip().lower().replace(" ", "").replace("-", "").replace("_", "")
 
 
+def mask_history_values(history_msgs: List[Dict]) -> List[Dict]:
+    """
+    Mask actual argument and result values in history to prevent model from
+    memorizing specific values. Replace with schema-based placeholders.
+    
+    This ensures the classifier learns to validate tool choices based on
+    semantic appropriateness, not specific argument values.
+    """
+    if not isinstance(history_msgs, list):
+        return history_msgs
+    
+    masked_history = []
+    for msg in history_msgs:
+        if not isinstance(msg, dict):
+            masked_history.append(msg)
+            continue
+        
+        masked_msg = msg.copy()
+        
+        # For assistant messages with tool_calls, mask the arguments
+        if msg.get("role") == "assistant" and msg.get("tool_calls"):
+            masked_tool_calls = []
+            for tool_call in msg["tool_calls"]:
+                masked_tc = tool_call.copy()
+                if "function" in tool_call:
+                    func = tool_call["function"].copy()
+                    # Mask arguments - keep argument names only
+                    if "arguments" in func and isinstance(func["arguments"], dict):
+                        func["arguments"] = {k: "<value>" for k in func["arguments"].keys()}
+                    masked_tc["function"] = func
+                masked_tool_calls.append(masked_tc)
+            masked_msg["tool_calls"] = masked_tool_calls
+        
+        # For tool/function roles, mask arguments and results
+        if msg.get("role") in ("tool", "function"):
+            # Mask tool arguments - keep structure but replace values
+            if "arguments" in msg and isinstance(msg["arguments"], dict):
+                # Keep argument names but not values
+                masked_msg["arguments"] = {k: "<value>" for k in msg["arguments"].keys()}
+            
+            # Mask results - just use generic placeholder
+            if "result" in msg:
+                masked_msg["result"] = "<result>"
+            if "output" in msg:
+                masked_msg["output"] = "<result>"
+            if "content" in msg and msg.get("role") == "tool":
+                masked_msg["content"] = "<result>"
+        
+        masked_history.append(masked_msg)
+    
+    return masked_history
+
+
 def extract_tool_calls_from_dialog(dialogs: List[Dict]) -> List[Dict]:
     """
     Extract all tool calls from a dialog sequence.
@@ -180,6 +233,9 @@ def extract_from_all_model_runs(
                     if not full_history:
                         full_history = gold_call["context"][-10:]
                     
+                    # Mask argument and result values to prevent memorization
+                    full_history = mask_history_values(full_history)
+                    
                     tool_name = gold_call["tool_name"]
                     tool_desc = toolmeta.get(tool_name, {}).get(
                         "description",
@@ -235,78 +291,35 @@ def extract_from_all_model_runs(
             tools_per_sample[sample_idx].add(tool)
             samples_by_tool[tool].add(sample_idx)
     
-    # Strategy: For each tool, ensure representation in both sets
-    # Start with completely separate sets
-    train_val_sample_indices = set()
-    test_sample_indices = set()
-    all_samples = set(examples_by_sample.keys())
+    # Strategy: Simple 70/30 random split, then ensure minimum tool coverage
+    all_samples = list(examples_by_sample.keys())
+    random.shuffle(all_samples)
     
-    # For each tool, allocate samples to train/val and test
-    tool_assignments = {tool: {'train_val': set(), 'test': set()} for tool in samples_by_tool.keys()}
+    # Initial 70/30 split
+    split_point = int(len(all_samples) * 0.7)
+    train_val_sample_indices = set(all_samples[:split_point])
+    test_sample_indices = set(all_samples[split_point:])
     
-    print("Allocating samples to ensure all tools in both sets:")
+    # Ensure each tool has at least min_samples_per_tool in test (if possible)
+    print("Ensuring minimum tool coverage in both sets:")
     for tool in sorted(samples_by_tool.keys()):
-        available_samples = list(samples_by_tool[tool])
-        total_available = len(available_samples)
+        # Count how many samples for this tool are in each set
+        tool_in_train_val = samples_by_tool[tool] & train_val_sample_indices
+        tool_in_test = samples_by_tool[tool] & test_sample_indices
         
-        # Calculate split
-        if total_available <= min_samples_per_tool:
-            num_train_val = max(1, total_available - 1)  # Keep at least 1 for test if possible
-            num_test = max(1, total_available - num_train_val)
-        else:
-            num_train_val = max(min_samples_per_tool, int(total_available * 0.7))
-            num_test = total_available - num_train_val
+        # If test has too few samples for this tool, move some from train/val
+        min_test = min(3, len(samples_by_tool[tool]) // 4)  # At least 3 or 25% of tool samples
+        if len(tool_in_test) < min_test and len(tool_in_train_val) > min_test:
+            # Move some samples from train/val to test
+            need_to_move = min_test - len(tool_in_test)
+            movable = list(tool_in_train_val)[:need_to_move]
+            for sample in movable:
+                train_val_sample_indices.discard(sample)
+                test_sample_indices.add(sample)
+            tool_in_train_val = samples_by_tool[tool] & train_val_sample_indices
+            tool_in_test = samples_by_tool[tool] & test_sample_indices
         
-        # Shuffle for randomness
-        random.shuffle(available_samples)
-        
-        # Assign samples
-        tool_train_val = set(available_samples[:num_train_val])
-        tool_test = set(available_samples[num_train_val:num_train_val + num_test])
-        
-        tool_assignments[tool]['train_val'] = tool_train_val
-        tool_assignments[tool]['test'] = tool_test
-        
-        print(f"  {tool}: {len(tool_train_val)} samples for train/val, {len(tool_test)} for test (from {total_available})")
-    
-    # Now create final assignment ensuring no overlap
-    # Priority: if a sample is needed for test (especially for rare tools), put it in test
-    assigned_to_test = set()
-    assigned_to_train_val = set()
-    
-    # First pass: assign samples that are ONLY in test for any tool
-    for tool, assignments in tool_assignments.items():
-        exclusive_test = assignments['test'] - assignments['train_val']
-        assigned_to_test.update(exclusive_test)
-    
-    # Second pass: assign samples that are ONLY in train/val for any tool
-    for tool, assignments in tool_assignments.items():
-        exclusive_train_val = assignments['train_val'] - assignments['test']
-        assigned_to_train_val.update(exclusive_train_val - assigned_to_test)
-    
-    # Third pass: handle samples that appear in both (multi-tool samples)
-    # Prefer test for rare tools, train/val for common tools
-    unassigned = all_samples - assigned_to_test - assigned_to_train_val
-    
-    for sample in unassigned:
-        sample_tools = tools_per_sample[sample]
-        # Count how many times each set needs this sample
-        test_needs = sum(1 for t in sample_tools if sample in tool_assignments[t]['test'])
-        train_val_needs = sum(1 for t in sample_tools if sample in tool_assignments[t]['train_val'])
-        
-        # Check if any rare tool needs it for test
-        rare_tool_needs_test = any(
-            len(samples_by_tool[t]) <= min_samples_per_tool and sample in tool_assignments[t]['test']
-            for t in sample_tools
-        )
-        
-        if rare_tool_needs_test or test_needs > train_val_needs:
-            assigned_to_test.add(sample)
-        else:
-            assigned_to_train_val.add(sample)
-    
-    train_val_sample_indices = assigned_to_train_val
-    test_sample_indices = assigned_to_test
+        print(f"  {tool}: {len(tool_in_train_val)} samples in train/val, {len(tool_in_test)} in test (from {len(samples_by_tool[tool])})")
     
     # Verify no overlap
     overlap = train_val_sample_indices & test_sample_indices
@@ -420,6 +433,9 @@ def extract_from_all_model_runs(
                         if not full_history:
                             full_history = pred_call["context"][-10:]
                         
+                        # Mask argument and result values to prevent memorization
+                        full_history = mask_history_values(full_history)
+                        
                         tool_desc = toolmeta.get(pred_tool, {}).get(
                             "description",
                             f"Tool: {pred_tool}"
@@ -518,6 +534,9 @@ def extract_from_all_model_runs(
                         
                         if not full_history:
                             full_history = pred_call["context"][-10:]
+                        
+                        # Mask argument and result values to prevent memorization
+                        full_history = mask_history_values(full_history)
                         
                         tool_desc = toolmeta.get(pred_tool, {}).get(
                             "description",

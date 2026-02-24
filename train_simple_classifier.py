@@ -64,29 +64,55 @@ class ToolChoiceDataset(Dataset):
         return ""
 
     def _summarize_history(self, example: Dict) -> str:
+        """
+        Summarize tool calls in history using schema placeholders instead of actual values.
+        This prevents the model from memorizing specific argument/result values and instead
+        learning to validate tool choices based on semantic appropriateness.
+        """
         full_history = example.get("full_history") or []
         history_parts = []
+        
+        # Build a map of tool calls from assistant messages to track argument names
+        last_tool_args = {}  # tool_name -> arg names for that tool
 
-        # Collect tool calls
-        for item in full_history:
+        # Collect tool calls from both assistant tool_calls and tool result messages
+        for i, item in enumerate(full_history):
             role = item.get("role")
-            if role in ("tool", "function"):
+            
+            # From assistant messages with tool_calls
+            if role == "assistant" and item.get("tool_calls"):
+                for tool_call in item["tool_calls"]:
+                    func = tool_call.get("function", {})
+                    tool_name = func.get("name", "")
+                    args = func.get("arguments", {})
+                    
+                    if isinstance(args, dict):
+                        arg_names = ", ".join(args.keys())
+                    else:
+                        arg_names = "<args>"
+                    
+                    # Store for later reference
+                    last_tool_args[tool_name] = arg_names
+                    history_parts.append(f"[TOOL] {tool_name}({arg_names}) -> <result>")
+            
+            # From tool result messages (fallback)
+            elif role in ("tool", "function"):
                 name = item.get("name") or item.get("tool_name") or item.get("function_name") or ""
-                args = item.get("arguments") or item.get("tool_input") or item.get("args") or {}
-                try:
-                    args_str = json.dumps(args, separators=(",", ":")) if isinstance(args, (dict, list)) else str(args)
-                except Exception:
-                    args_str = str(args)
-                result = item.get("result") or item.get("output") or item.get("content") or ""
-                # Truncate overly long result
-                if isinstance(result, str) and len(result) > 200:
-                    result = result[:200] + "..."
-                history_parts.append(f"[TOOL_CALL] {name} {args_str} -> {result}")
+                args = item.get("arguments", {})
+                
+                if isinstance(args, dict) and args:
+                    # Use arguments from tool message if available
+                    arg_names = ", ".join(args.keys())
+                    history_parts.append(f"[TOOL] {name}({arg_names}) -> <result>")
+                elif name and name in last_tool_args:
+                    # Use stored args from the most recent tool_call for this tool
+                    arg_names = last_tool_args[name]
+                    history_parts.append(f"[TOOL] {name}({arg_names}) -> <result>")
 
         history_str = " ".join(history_parts)
         # Truncate full history string if too long
-        if len(history_str) > 1000:
-            history_str = history_str[:1000] + "..."
+        if len(history_str) > 500:
+            history_str = history_str[:500] + "..."
         return history_str
 
     def format_input(self, example: Dict) -> str:
@@ -122,11 +148,19 @@ class ToolChoiceDataset(Dataset):
         tool_desc = example.get("tool_description", "")
         parts.append(f"[TOOL_CALLED] {tool_name}: {tool_desc}")
         
-        # Schema: parameter names with masked values (NEW)
+        # Arguments: Use actual arguments if no schema available
+        tool_args = example.get("tool_arguments", {})
         arg_schema = example.get("argument_schema", {})
+        
         if arg_schema:
+            # Use schema if available (parameter names with types)
             schema_str = ", ".join([f"{k}={v}" for k, v in arg_schema.items()])
             parts.append(f"[SCHEMA] {schema_str}")
+        elif tool_args and isinstance(tool_args, dict):
+            # Fallback: use argument names only (without values for privacy)
+            args_str = ", ".join(tool_args.keys())
+            if args_str:
+                parts.append(f"[ARGS] {args_str}")
         
         return " ".join(parts)
     
@@ -378,23 +412,30 @@ def train(
     print(f"Val batches: {len(val_loader)}")
     print(f"Test batches: {len(test_loader)}")
     
-    # Analyze class distribution (no weighting for 72/28 realistic distribution)
+    # Analyze class distribution and calculate class weights
     print("\nAnalyzing class distribution...")
     train_labels = [ex.get("label", 0) for ex in train_loader.dataset.examples]
-    # num_class_0 = sum(1 for label in train_labels if label == 0)
-    # num_class_1 = sum(1 for label in train_labels if label == 1)
-    # total_samples = len(train_labels)
+    num_class_0 = sum(1 for label in train_labels if label == 0)
+    num_class_1 = sum(1 for label in train_labels if label == 1)
+    total_samples = len(train_labels)
     
-    # print(f"Class 0 (incorrect): {num_class_0} samples ({100*num_class_0/total_samples:.1f}%)")
-    # print(f"Class 1 (correct): {num_class_1} samples ({100*num_class_1/total_samples:.1f}%)")
-    # print(f"Distribution: {100*num_class_0/total_samples:.1f}% incorrect, {100*num_class_1/total_samples:.1f}% correct")
-    # print("\nUsing unweighted loss for 72/28 realistic distribution")
-    # print("(Model will naturally learn real distribution without forced balancing)")
+    print(f"Class 0 (incorrect): {num_class_0} samples ({100*num_class_0/total_samples:.1f}%)")
+    print(f"Class 1 (correct): {num_class_1} samples ({100*num_class_1/total_samples:.1f}%)")
+    print(f"Distribution: {100*num_class_0/total_samples:.1f}% incorrect, {100*num_class_1/total_samples:.1f}% correct")
     
-    # # Setup optimizer and loss WITHOUT class weights
-    # # For 72/28 data, we want the model to naturally learn the real distribution
+    # Calculate inverse frequency weights
+    weight_class_0 = total_samples / (2 * num_class_0)
+    weight_class_1 = total_samples / (2 * num_class_1)
+    class_weights = torch.tensor([weight_class_0, weight_class_1], dtype=torch.float32).to(device)
+    
+    print(f"\nClass weights:")
+    print(f"  Class 0 (incorrect): {weight_class_0:.4f}")
+    print(f"  Class 1 (correct): {weight_class_1:.4f}")
+    print("Using weighted loss to balance class importance")
+    
+    # Setup optimizer and loss WITH class weights
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss(weight=class_weights)
     
     # Training loop
     best_val_accuracy = 0
@@ -474,23 +515,23 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Simple Tool Choice Classifier")
     parser.add_argument(
         "--train-file",
-        default="/home/james/ThinkGeo/tool_choice_data_schema_aware/train_augmented.json",
-        help="Path to training data (augmented with multi-step tool sequences)"
+        default="/home/james/ThinkGeo/tool_choice_data_from_predictions/train.json",
+        help="Path to training data"
     )
     parser.add_argument(
         "--val-file",
-        default="/home/james/ThinkGeo/tool_choice_data_schema_aware/val_augmented.json",
+        default="/home/james/ThinkGeo/tool_choice_data_from_predictions/val.json",
         help="Path to validation data"
     )
     parser.add_argument(
         "--test-file",
-        default="/home/james/ThinkGeo/tool_choice_data_schema_aware/test_augmented.json",
+        default="/home/james/ThinkGeo/tool_choice_data_from_predictions/test.json",
         help="Path to test data"
     )
     parser.add_argument(
         "--output-dir",
-        default="./checkpoints_augmented",
-        help="Output directory for checkpoints (with augmented training data)"
+        default="./checkpoints2",
+        help="Output directory for checkpoints"
     )
     parser.add_argument(
         "--num-epochs",

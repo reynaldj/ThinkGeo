@@ -1066,13 +1066,13 @@ class LagentAgent:
         # Lowered from 0.5 to 0.45 to accept first-step tool calls with lower confidence
         # (model tends to have lower confidence on first-step calls due to training data distribution)
         self.classifier_confidence_threshold = kwargs.get('classifier_confidence_threshold', 0.45)
-        self.classifier_enabled = kwargs.get('classifier_enabled', False)  # DISABLED by default
+        self.classifier_enabled = kwargs.get('classifier_enabled', True)  # DISABLED by default
         
         if CLASSIFIER_AVAILABLE and ToolChoiceValidator is not None and self.classifier_enabled:
             try:
                 classifier_model_path = kwargs.get(
                     'classifier_model_path',
-                    '/home/james/ThinkGeo/checkpoints_augmented/best_model.pth'
+                    '/home/james/ThinkGeo/checkpoints3/best_model.pth'
                 )
                 if os.path.exists(classifier_model_path):
                     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -1142,7 +1142,7 @@ class LagentAgent:
                 break
         
         # Build history string from actual history for classifier (BEFORE react conversion)
-        # Format: [TOOL_CALL] name args -> result
+        # Format: [TOOL] name(arg1, arg2, ...) -> <result> (schema only, no values)
         original_history_parts = []
         i = 0
         while i < len(history):
@@ -1157,26 +1157,15 @@ class LagentAgent:
                             func = tool_call.get('function', {})
                             name = func.get('name', '')
                             args = func.get('arguments', {})
-                            try:
-                                args_str = json.dumps(args, separators=(",", ":")) if isinstance(args, (dict, list)) else str(args)
-                            except Exception:
-                                args_str = str(args) if args else '{}'
                             
-                            # Look for corresponding tool response in next item
-                            result = ''
-                            if i + 1 < len(history):
-                                next_item = history[i + 1]
-                                if isinstance(next_item, dict) and next_item.get('role') in ('tool', 'function'):
-                                    result = next_item.get('result', '') or next_item.get('output', '') or next_item.get('content', '')
-                                    # If result is a dict with 'content' key, extract it
-                                    if isinstance(result, dict) and 'content' in result:
-                                        result = result['content']
-                                    # Convert to string and truncate if too long
-                                    result = str(result) if result else ''
-                                    if len(result) > 200:
-                                        result = result[:200] + '...'
+                            # Extract argument names only (schema), no values
+                            if isinstance(args, dict):
+                                arg_names = ", ".join(args.keys())
+                            else:
+                                arg_names = ""
                             
-                            original_history_parts.append(f"[TOOL_CALL] {name} {args_str} -> {result}")
+                            # Format: [TOOL] ToolName(arg1, arg2, ...) -> <result>
+                            original_history_parts.append(f"[TOOL] {name}({arg_names}) -> <result>")
             i += 1
         
         original_history_str = " ".join(original_history_parts)
@@ -1350,10 +1339,10 @@ Choose the appropriate tool or provide your final answer now."""
                         tool_desc = tool_desc.get('description', str(tool_desc))
                     tool_desc = str(tool_desc) if tool_desc else action_name
                     
-                    # Extract argument schema from sanitized_args (parameter names with masked values)
+                    # Extract argument schema from sanitized_args (parameter names only, no values)
                     argument_schema = None
                     if isinstance(sanitized_args, dict):
-                        argument_schema = {k: '<MASKED>' for k in sanitized_args.keys()}
+                        argument_schema = list(sanitized_args.keys())
                     
                     # Validate with classifier (using pre-built history from original history)
                     classifier_valid, classifier_reason, classifier_conf = _validate_tool_choice_with_classifier(

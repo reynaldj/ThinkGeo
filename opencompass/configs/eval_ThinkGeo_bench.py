@@ -411,34 +411,34 @@ with read_base():
 #     ),
 # ]
 
-models = [
-    dict(
-        abbr='qwen2.5-7b-instruct',
-        type=CodeAgent,
-        agent_type=ReAct,
-        max_turn=10,
-        llm=dict(
-            type=OpenAI,
-            path='qwen2.5-7b-instruct',  # Model name (can be any identifier)
-            key='EMPTY',  # Not needed for your server
-            openai_api_base='http://localhost:12581/v1/chat/completions',  # Your LLM server (LMDeploy)
-            query_per_second=1,
-            max_seq_len=4096,
-            generation_kwargs=dict(
-                temperature=0.9,
-                top_p=0.95,
-                top_k=50,
-            ),
-            max_tokens=2048,  # OpenAI API uses 'max_tokens' (passed via gen_params)
-            stop='<|im_end|>',
-        ),
-        # tool_server='http://localhost:16182',  # Your AgentLego tool server
-        tool_meta='data/ThinkGeo_dataset/toolmeta.json',
-        # OR use tool_meta for step-by-step mode (no server needed):
-        # tool_meta='data/ThinkGeo_dataset/toolmeta.json',
-        batch_size=8,
-    ),
-]
+# models = [
+#     dict(
+#         abbr='qwen2.5-7b-instruct',
+#         type=CodeAgent,
+#         agent_type=ReAct,
+#         max_turn=10,
+#         llm=dict(
+#             type=OpenAI,
+#             path='qwen2.5-7b-instruct',  # Model name (can be any identifier)
+#             key='EMPTY',  # Not needed for your server
+#             openai_api_base='http://localhost:12581/v1/chat/completions',  # Your LLM server (LMDeploy)
+#             query_per_second=1,
+#             max_seq_len=4096,
+#             generation_kwargs=dict(
+#                 temperature=0.9,
+#                 top_p=0.95,
+#                 top_k=50,
+#             ),
+#             max_tokens=2048,  # OpenAI API uses 'max_tokens' (passed via gen_params)
+#             stop='<|im_end|>',
+#         ),
+#         # tool_server='http://localhost:16182',  # Your AgentLego tool server
+#         tool_meta='data/ThinkGeo_dataset/toolmeta.json',
+#         # OR use tool_meta for step-by-step mode (no server needed):
+#         # tool_meta='data/ThinkGeo_dataset/toolmeta.json',
+#         batch_size=8,
+#     ),
+# ]
 
 # models = [
 #     dict(
@@ -490,6 +490,29 @@ models = [
 #         batch_size=8,
 #     ),
 # ]
+
+models = [
+    dict(
+        abbr='mistral-7b-instruct',
+        type=LagentAgent,
+        agent_type=ReAct,
+        max_turn=10,
+        llm=dict(
+            type=OpenAI,
+            path='mistral-7b-instruct',  # Model name (can be any identifier)
+            key='EMPTY',  # Not needed for your server
+            openai_api_base='http://localhost:12579/v1/chat/completions',  # Your LLM server (LMDeploy)
+            query_per_second=1,
+            max_seq_len=4096,
+            stop='<|im_end|>',
+        ),
+        # tool_server='http://localhost:16182',  # Your AgentLego tool server
+        tool_meta='data/ThinkGeo_dataset/toolmeta.json',
+        # OR use tool_meta for step-by-step mode (no server needed):
+        # tool_meta='data/ThinkGeo_dataset/toolmeta.json',
+        batch_size=8,
+    ),
+]
 
 
 infer = dict(

@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 import copy
 import re
 from tqdm import tqdm
@@ -53,14 +53,18 @@ class ThinkGeoBenchDataset(BaseDataset):
     """ThinkGeo Benchmark."""
 
     @staticmethod
-    def load(path: str):
+    def load(path: str, filter_sample_ids: Optional[List[str]] = None):
         data_root = Path(path)
         data_file = f"{data_root}/{DATA_}"      
         assert os.path.exists(data_file), f'Path {path} does not exist.'
 
         data = json.load(open(data_file))
         data_list = []
+        filter_set = set(filter_sample_ids) if filter_sample_ids else None
         for idx, item in data.items():
+            key_str = str(idx)
+            if filter_set is not None and key_str not in filter_set:
+                continue
             idx = int(idx)
             tools = [
                 dict(type='tool', name=tool['name']) for tool in item['tools']
@@ -146,6 +150,7 @@ class ThinkGeoBenchEvaluator(BaseEvaluator):
             return 'none'
 
     def score(self, predictions: list, references: list, gold: list):
+        print("Evaluating with mode:", self.mode)
         if self.mode == 'every_with_gt':
             total = {'tool': 0, 'answer': 0}
             metrics = {
@@ -183,10 +188,14 @@ class ThinkGeoBenchEvaluator(BaseEvaluator):
                         elif isinstance(ref, list):
                             metrics['answer_acc'] += self.simscore(pred_, ref)
                             
+            # Exclude tool_call_error steps from denominators for alignment/accuracy
+            effective_tool_total = max(total['tool'] - metrics['tool_call_error'], 0)
+            effective_inst_total = max(sum(total.values()) - metrics['tool_call_error'], 0)
+            print(f"Metrics: {metrics}")
             return dict(
-                inst_align=metrics['inst_align'] / sum(total.values()) * 100,
-                tool_acc=metrics['tool_acc'] / total['tool'] * 100,
-                arg_acc=metrics['arg_acc'] / total['tool'] * 100,
+                inst_align=metrics['inst_align'] / (effective_inst_total or 1) * 100,
+                tool_acc=metrics['tool_acc'] / (effective_tool_total or 1) * 100,
+                arg_acc=metrics['arg_acc'] / (effective_tool_total or 1) * 100,
                 answer_acc=metrics['answer_acc'] / total['answer'] * 100,
                 tool_call=metrics['tool_call'],
                 tool_call_error=metrics['tool_call_error']
